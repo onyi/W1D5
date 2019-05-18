@@ -33,10 +33,8 @@ class PolyTreeNode
   end
 
   def add_child(child_node)
-    #debugger
     if @children.none?(child_node)
       child_node.parent = self
-      # @children << child_node 
     else
       
     end
@@ -49,22 +47,30 @@ class PolyTreeNode
     else
       raise "Node is not a Child" 
     end
-
   end
 
   def dfs(target_value)
-    depth_stack = []
-    if @value == target_value
+    # p "Current Node Value: #{value}"
+    if value == target_value
       return self
     else
-      to_stack = 
-      @children.each {|child| dfs(target_value) }
+      children.each do |child| 
+        res = child.dfs(target_value) 
+        return res unless res.nil? 
+      end
     end
-
+    nil
   end
 
   def bfs(target_value)
-
+    queue = []
+    queue << self
+    until queue.empty? do
+      node = queue.shift
+      return node if node.value == target_value
+      queue += node.children
+    end
+    nil
   end
 
   
